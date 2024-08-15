@@ -1,0 +1,46 @@
+version: '3.9'
+
+services:
+  ftpserver:
+    container_name: ftpserver_cont
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+    - .env
+    volumes:
+      - ..:/workspaces
+    restart: always
+    command: /bin/bash -c "python3 /workspaces/ftpserver.py"
+    ports:
+      - "2121:2121"
+
+  sftpserver:
+    container_name: sftpserver_cont
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+    - .env
+    volumes:
+      - ..:/workspaces
+    restart: always
+    command: /bin/bash -c "python3 /workspaces/sftpserver.py"
+    ports:
+      - "2122:2122"
+      
+  ftpclient:
+    container_name: ftpclient_cont
+    # image: python:3.9
+    restart: always
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+    - .env
+    volumes:
+      - ..:/workspaces
+    command: tail -f /dev/null
+    # command: python -m http.server 8000
+    # ports:
+    #   - 8081:8081

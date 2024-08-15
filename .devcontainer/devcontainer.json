@@ -1,0 +1,23 @@
+{
+    "name": "python_ftp_dev",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "ftpclient",
+    "workspaceFolder": "/workspaces",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.shell.linux": "/bin/bash"
+            },
+            "extensions": [
+                "ms-python.python",
+                "mtxr.sqltools",
+                "rangav.vscode-thunder-client",
+                "rohinivsenthil.rabbitrace",
+                "cweijan.vscode-redis-client",
+                "mtxr.sqltools-driver-pg"
+            ]
+        }
+    },
+  //   "privileged": true,
+  
+  }
