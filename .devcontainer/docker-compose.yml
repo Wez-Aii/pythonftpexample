@@ -24,10 +24,11 @@ services:
     - .env
     volumes:
       - ..:/workspaces
-    restart: always
-    command: /bin/bash -c "python3 /workspaces/sftpserver.py"
+    # restart: always
+    command: tail -f /dev/null
+    # command: /bin/bash -c "python3 /workspaces/sftpserver.py"
     ports:
-      - "2122:2122"
+      - "2222:2222"
       
   ftpclient:
     container_name: ftpclient_cont
