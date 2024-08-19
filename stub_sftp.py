@@ -24,12 +24,22 @@ import os
 from paramiko import ServerInterface, SFTPServerInterface, SFTPServer, SFTPAttributes, \
     SFTPHandle, SFTP_OK
 from paramiko.common import AUTH_SUCCESSFUL, OPEN_SUCCEEDED, AUTH_FAILED, OPEN_FAILED_ADMINISTRATIVELY_PROHIBITED
+from postgres.connection import ConnectionInstance
+from postgres.tables_models import OtuLoginDm
+
+_db_conn = ConnectionInstance(database_name="test1")
 
 
 class StubServer (ServerInterface):
     def check_auth_password(self, username, password):
-        # all are allowed
-        if username == "admin" and password == "admin":
+        _db_conn = ConnectionInstance(database_name="test1")
+        _db_session = _db_conn.create_session()
+        _otu_login_data = _db_session.query(OtuLoginDm).filter(OtuLoginDm.username == username, OtuLoginDm.password == password, OtuLoginDm.is_active == True).first()
+        if _otu_login_data is not None:
+            _otu_login_data.is_active = False
+            _db_session.commit()
+            _db_session.close()
+        # if username == "admin" and password == "admin":
             return AUTH_SUCCESSFUL
         return AUTH_FAILED
 

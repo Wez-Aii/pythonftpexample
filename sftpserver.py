@@ -174,7 +174,7 @@ def main():
 
     # start_server(args.host, args.port, args.root, args.keyfile, password, args.level, args.mode)
 
-    start_server(host="0.0.0.0", port=PORT, root="/workspaces", keyfile="/workspaces/test_rsa.key", password="any", level="DEBUG", mode="threaded")
+    start_server(host="0.0.0.0", port=PORT, root="/workspaces", keyfile="/workspaces/test_rsa.key", password="any", level="DEBUG", mode="forked")
 
 
 if __name__ == '__main__':

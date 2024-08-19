@@ -38,12 +38,18 @@ def download_folder(sftp, remote_path, local_path):
             sftp.get(remote_item_path, local_item_path)
 
 
-# pkey = paramiko.RSAKey.from_private_key_file('/workspaces/test_rsa.key')
-pkey = None
-transport = paramiko.Transport(('sftpserver', 2222))
-transport.connect(username='admin', password='admin', pkey=pkey)
-sftp = paramiko.SFTPClient.from_transport(transport)
-files = sftp.listdir('.')
-print(files)
-upload_folder(sftp=sftp, local_folder="uploaddir1", remote_folder="remotedir")
-download_folder(sftp=sftp, remote_path="remotedir", local_path="downloaddir2")
+if __name__=="__main__":
+    try:
+        # pkey = paramiko.RSAKey.from_private_key_file('/workspaces/test_rsa.key')
+        pkey = None
+        transport = paramiko.Transport(('server', 2222))
+        transport.connect(username='admin', password='admin', pkey=pkey)
+        sftp = paramiko.SFTPClient.from_transport(transport)
+        files = sftp.listdir('.')
+        print(files)
+        upload_folder(sftp=sftp, local_folder="uploaddir1", remote_folder="remotedir")
+        download_folder(sftp=sftp, remote_path="remotedir", local_path="downloaddir2")
+    except Exception as e:
+        print(e)
+    transport.close()
+    sftp.close()
